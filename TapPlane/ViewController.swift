@@ -24,7 +24,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
+        
+        // Add light
+        let light = SCNLight()
+        light.type = .omni
+        let lightNode = SCNNode()
+        lightNode.light = light
+        lightNode.position = SCNVector3(0, 0, 0)
+        scene.rootNode.addChildNode(lightNode)
+        
+        // Add box
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.blue
+        let geometry = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)
+        geometry.materials = [material]
+        let boxNode = SCNNode(geometry: geometry)
+        boxNode.position = SCNVector3(0, 0, -5)
+        scene.rootNode.addChildNode(boxNode)
         
         // Set the scene to the view
         sceneView.scene = scene
